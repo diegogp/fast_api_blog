@@ -1,0 +1,8 @@
+psycopg2
+psycopg2-binary
+fastapi==0.68.0
+pydantic==1.8.2
+uvicorn==0.13.4
+sqlalchemy==1.4.23
+email-validator==1.2.1
+passlib[bcrypt]

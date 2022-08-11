@@ -1,0 +1,44 @@
+version: "3.0"
+services:
+  app:
+    container_name: app
+    hostname: app
+    build:
+      context: app
+    volumes:
+      - ./app:/code/app
+    ports:
+      - "80:80"
+    command: "uvicorn app.main:app --reload --host 0.0.0.0 --port 80"
+    networks:
+    - dock-db-test
+    tty: true
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_PASSWORD=password123
+      - DATABASE_NAME=app
+      - DATABASE_USERNAME=postgres
+
+  postgres:
+    container_name: postgres
+    hostname: postgres
+    image: postgres:14.2-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=password123
+      - POSTGRES_DB=app
+    restart: always
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "app", "-U", "postgres" ]
+      timeout: 40s
+      interval: 2s
+      retries: 20
+
+    networks:
+      - dock-db-test
+    tty: true
+networks:
+  dock-db-test:
+    name: dock-db-test
