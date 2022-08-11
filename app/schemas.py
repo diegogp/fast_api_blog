@@ -29,3 +29,7 @@ class UserOut(BaseModel):
     created_at: datetime
     class Config:
         orm_mode = True ##convert sqlalchemy model to pydantic schema
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str

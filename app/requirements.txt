@@ -6,3 +6,5 @@ uvicorn==0.13.4
 sqlalchemy==1.4.23
 email-validator==1.2.1
 passlib[bcrypt]
+python-jose[cryptography]
+python-multipart
